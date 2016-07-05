@@ -21,8 +21,8 @@ const std::size_t ThresholdSingleData::layer() const{return f_layer;}
 const JPET_side ThresholdSingleData::side() const{return f_side;}
 const std::size_t ThresholdSingleData::slot() const{return f_slot;}
 const threshold_type ThresholdSingleData::threshold() const{return f_threshold;}
-const std::size_t ThresholdSingleData::value() const{return f_value;}
-std::size_t& ThresholdSingleData::Value(){return f_value;}
+const double ThresholdSingleData::value() const{return f_value;}
+double& ThresholdSingleData::Value(){return f_value;}
 
 ThresholdData::ThresholdData(const ThresholdData& source){
 	for(auto&item:source.f_data)
@@ -44,13 +44,17 @@ const ThresholdSingleData& ThresholdData::get(const threshold_type thr,const JPE
 	for(const ThresholdSingleData&item:f_data)
 		if((item.threshold()==thr)&&(item.side()==side)&&(item.layer()==layer)&&(item.slot()==slot))
 			return item;
-	throw Exception<ThresholdData>("Element not found[]");
+	stringstream errorbuf;
+	errorbuf<<"Element not found[]:"<<int(thr)<<"\t"<<int(side)<<"\t"<<layer<<"\t"<<slot;
+	throw Exception<ThresholdData>(errorbuf.str());
 }
 ThresholdSingleData& ThresholdData::Get(const threshold_type thr,const JPET_side side, const std::size_t layer,const size_t slot){
 	for(ThresholdSingleData&item:f_data)
 		if((item.threshold()==thr)&&(item.side()==side)&&(item.layer()==layer)&&(item.slot()==slot))
 			return item;
-	throw Exception<ThresholdData>("Element not found()");
+		stringstream errorbuf;
+	errorbuf<<"Element not found():"<<int(thr)<<"\t"<<int(side)<<"\t"<<layer<<"\t"<<slot;
+	throw Exception<ThresholdData>(errorbuf.str());
 }
 
 void ThresholdSingleData::Save(ofstream& stream) const{
@@ -59,7 +63,7 @@ void ThresholdSingleData::Save(ofstream& stream) const{
 	if(f_threshold==thr_b)thr="b";
 	if(f_threshold==thr_c)thr="c";
 	if(f_threshold==thr_d)thr="d";
-	stream<<side<<"\t"<<f_layer<<"\t"<<f_slot<<"\t"<<thr<<"\t"<<f_value<<endl;
+	stream<<side<<"\t"<<f_layer<<"\t"<<f_slot<<"\t"<<thr<<"\t"<<int(f_value)<<endl;
 }
 void ThresholdData::Save(ofstream& stream) const{
 	stream<<"# side\tlayer\tpmt\tthr\tvalue"<<endl;

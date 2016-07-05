@@ -2,8 +2,10 @@
 #	define _______________THR_DATA_H_____________
 #include <fstream>
 #include <vector>
-enum JPET_side{side_left,side_right};
-enum threshold_type{thr_a,thr_b,thr_c,thr_d};
+enum JPET_side{side_left=0,side_right=1};
+inline JPET_side&inc(JPET_side&a){a=JPET_side(int(a)+1);return a;}
+enum threshold_type{thr_a=0,thr_b=1,thr_c=2,thr_d=3};
+inline threshold_type&inc(threshold_type&a){a=threshold_type(int(a)+1);return a;}
 class ThresholdSingleData{
 public:
 	ThresholdSingleData(std::string&line);
@@ -14,11 +16,12 @@ public:
 	const std::size_t layer()const;
 	const std::size_t slot()const;
 	const threshold_type threshold()const;
-	const std::size_t value()const;
-	std::size_t&Value();
+	const double value()const;
+	double&Value();
 private:
 	JPET_side f_side;
-	std::size_t f_layer,f_slot,f_value;
+	std::size_t f_layer,f_slot;
+	double f_value;
 	threshold_type f_threshold;
 };
 class ThresholdData{
