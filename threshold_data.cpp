@@ -52,7 +52,7 @@ ThresholdSingleData& ThresholdData::Get(const threshold_type thr,const JPET_side
 	for(ThresholdSingleData&item:f_data)
 		if((item.threshold()==thr)&&(item.side()==side)&&(item.layer()==layer)&&(item.slot()==slot))
 			return item;
-		stringstream errorbuf;
+	stringstream errorbuf;
 	errorbuf<<"Element not found():"<<int(thr)<<"\t"<<int(side)<<"\t"<<layer<<"\t"<<slot;
 	throw Exception<ThresholdData>(errorbuf.str());
 }
