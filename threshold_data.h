@@ -6,8 +6,9 @@ enum JPET_side{side_left,side_right};
 enum threshold_type{thr_a,thr_b,thr_c,thr_d};
 class ThresholdSingleData{
 public:
-	ThresholdSingleData(std::ifstream&stream);
+	ThresholdSingleData(std::string&line);
 	ThresholdSingleData(const ThresholdSingleData&source);
+	void Save(std::ofstream&stream)const;
 	virtual ~ThresholdSingleData();
 	const JPET_side side()const;
 	const std::size_t layer()const;
@@ -24,6 +25,7 @@ class ThresholdData{
 public:
 	ThresholdData(std::ifstream&stream);
 	ThresholdData(const ThresholdData&source);
+	void Save(std::ofstream&stream)const;
 	virtual ~ThresholdData();
 	const ThresholdSingleData& get(const threshold_type thr,const JPET_side side,const std::size_t layer,const size_t slot)const;
 	ThresholdSingleData& Get(const threshold_type thr,const JPET_side side,const std::size_t layer,const size_t slot);

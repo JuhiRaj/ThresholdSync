@@ -5,12 +5,7 @@ using namespace std;
 using namespace MathTemplates;
 ThresholdSingleData::ThresholdSingleData(const ThresholdSingleData& source)
 :f_side(source.f_side),f_layer(source.f_layer),f_slot(source.f_slot),f_value(source.f_value),f_threshold(source.f_threshold){}
-ThresholdSingleData::ThresholdSingleData(ifstream& stream){
-	string line;
-	do{
-		if(!getline(stream,line))break;
-	}while((line=="")||(line[0]=='#'));
-	if(line=="")throw Exception<ThresholdSingleData>("Error reading from stream");
+ThresholdSingleData::ThresholdSingleData(string&line){
 	stringstream str(line);
 	string side,thr;
 	str>>side>>f_layer>>f_slot>>thr>>f_value;
@@ -34,8 +29,12 @@ ThresholdData::ThresholdData(const ThresholdData& source){
 		f_data.push_back(item);
 }
 ThresholdData::ThresholdData(ifstream& stream){
-	while(stream)
-		operator<<(ThresholdSingleData(stream));
+	while(stream){
+		string line;
+		getline(stream,line);
+		if((line!="")&&(line[0]!='#'))
+			operator<<(ThresholdSingleData(line));
+	}
 }
 ThresholdData::~ThresholdData(){}
 ThresholdData& ThresholdData::operator<<(const ThresholdSingleData& item){
@@ -52,6 +51,20 @@ ThresholdSingleData& ThresholdData::Get(const threshold_type thr,const JPET_side
 		if((item.threshold()==thr)&&(item.side()==side)&&(item.layer()==layer)&&(item.slot()==slot))
 			return item;
 	throw Exception<ThresholdData>("Element not found()");
+}
+
+void ThresholdSingleData::Save(ofstream& stream) const{
+	string side="A",thr="a";
+	if(f_side==side_right)side="B";
+	if(f_threshold==thr_b)thr="b";
+	if(f_threshold==thr_c)thr="c";
+	if(f_threshold==thr_d)thr="d";
+	stream<<side<<"\t"<<f_layer<<"\t"<<f_slot<<"\t"<<thr<<"\t"<<f_value<<endl;
+}
+void ThresholdData::Save(ofstream& stream) const{
+	stream<<"# side\tlayer\tpmt\tthr\tvalue"<<endl;
+	for(auto&item:f_data)
+		item.Save(stream);
 }
 
 
