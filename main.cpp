@@ -15,7 +15,7 @@ const size_t to_hist_index(const JPET_side side,const std::size_t layer,const si
 const ThresholdData PerformCalc(const vector<hist<double>>&hists,const ThresholdData&initial){
 	auto output=initial;
 	auto reference_bin=hists[3][1];
-	const vector<double> thr_coeff{300.0/180.0,280.0/180.0,230.0/180.0,1.0};
+	const vector<double> thr_coeff{380.0/180.0,280.0/180.0,230.0/180.0,1.0};
 	const vector<double> layer_coeff{1,1.07,1.27};
 	Plot<double> histplot;
 	histplot<<"set yrange [0:200000]"<<"set key on";
