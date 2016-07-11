@@ -1,9 +1,9 @@
 #include <iostream>
 #include <sstream>
 #include <map>
-#include <math_h/include/gnuplot_wrap.h>
-#include <gethist.h>
-#include <threshold_data.h>
+#include <gnuplot_wrap.h>
+#include "gethist.h"
+#include "threshold_data.h"
 using namespace std;
 using namespace GnuplotWrap;
 using namespace MathTemplates;

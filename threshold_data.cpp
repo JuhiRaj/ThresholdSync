@@ -1,5 +1,5 @@
 #include <sstream>
-#include <math_h/include/math_h/error.h>
+#include <math_h/error.h>
 #include <threshold_data.h>
 using namespace std;
 using namespace MathTemplates;
