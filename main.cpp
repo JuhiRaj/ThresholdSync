@@ -22,7 +22,7 @@ const ThresholdData PerformCalc(const vector<hist<double>>&hists,const Threshold
 	for(threshold_type thr=thr_a;thr<thr_d;inc(thr)){
 		stringstream nummsg;
 		nummsg<<"thr"<<int(thr);
-		histplot.Line(hists[int(thr)].Line(),nummsg.str());
+		histplot.Line(hists[int(thr)].toLine(),nummsg.str());
 		for(size_t layer=1;layer<=3;layer++)
 			for(JPET_side side=side_left;side<=side_right;inc(side))
 				for(size_t slot=1;slot<=layer_size[layer-1];slot++){
